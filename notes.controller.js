@@ -33,9 +33,21 @@ async function removeNote(id) {
   await fs.writeFile(notesPath, JSON.stringify(newList));
   console.log(chalk.red('Note removed'));
 };
+async function changeNote(id, title) {
+  const notes = await getNotes();
+
+  for (let i = 0; i < notes.length; i++) {
+    if (notes[i].id === id) {
+      notes[i].title = title;
+    }
+  };
+  await fs.writeFile(notesPath, JSON.stringify(notes));
+  console.log(chalk.blue('Note changed'));
+};
 
 module.exports = {
   addNote,
-  printNotes,
-  removeNote
+  getNotes,
+  removeNote,
+  changeNote
 };
